@@ -68,8 +68,11 @@ def history(request):
 		form=DetailForm(request.POST,instance=detail)
 		if form.is_valid():
 			form.save()
-			u=User.objects.get(email=detail.email)
+			u=User.objects.get(username=request.user.username)
 			l=request.POST.get('password','')
+			e=request.POST.get('email','')
+			u.email=e
+			u.username=e
 			u.set_password(l)
 			u.save()
 			return HttpResponse('you had edit the Detals')
