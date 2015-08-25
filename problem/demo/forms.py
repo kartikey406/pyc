@@ -3,7 +3,7 @@ from demo.models import Detals
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 class SignUpForm(ModelForm):
-	password=forms.CharField(widget=forms.PasswordInput(render_value=True),max_length=2)
+	password=forms.CharField(widget=forms.PasswordInput(render_value=True),max_length=20)
 	class Meta:
 		model=Detals
 		fields=('email','password')
