@@ -55,10 +55,10 @@ def auth_view(request):
 		return HttpResponseRedirect('/game')
 	else:
 		return HttpResponse('username and password is invalid')
-@login_required
+@login_required(login_url='/basic')
 def game(request):
 	return render_to_response('search.html',{'full_name':request.user.username},context_instance=RequestContext(request))
-@login_required
+@login_required(login_url='/basic')
 def history(request):
 	detail=Detals.objects.get(email=request.user.username)
 	
@@ -66,21 +66,27 @@ def history(request):
 	args.update(csrf(request))
 	if request.method=="POST":
 		form=DetailForm(request.POST,instance=detail)
-		if form.is_valid():
-			form.save()
-			u=User.objects.get(username=request.user.username)
-			l=request.POST.get('password','')
-			e=request.POST.get('email','')
-			u.email=e
-			u.username=e
-			u.set_password(l)
-			u.save()
-			return HttpResponse('you had edit the Detals')
+		if form.has_changed():
+			#return HttpResponse('true')
+			if form.is_valid():
+				form.save()
+				u=User.objects.get(username=request.user.username)
+				l=request.POST.get('password','')
+				e=request.POST.get('email','')
+				u.email=e
+				u.username=e
+				u.set_password(l)
+				u.save()
+				return HttpResponseRedirect('/game')
+			#auth.logout(request)
+			#return HttpResponse('you had edit the Details')
+			else:
+				return HttpResponse('the email_id you had entered is not unique or you had not filled all the field')
 		else:
-			return HttpResponse('the email_id you had entered is not unique or you had not filled all the field')
+			return HttpResponseRedirect('/game')
 	args['form']=DetailForm(initial={'name':detail.name,'email':detail.email,'password':detail.password,'phone_number':detail.phone_number})
 	return render_to_response('history.html',args)
-@login_required
+@login_required(login_url='/basic')
 def logout(request):
 	auth.logout(request)
 	return HttpResponseRedirect('/basic')
