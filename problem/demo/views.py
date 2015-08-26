@@ -15,10 +15,15 @@ from django.contrib.auth.hashers import PBKDF2PasswordHasher
 
 # Create your views here.
 def home(request):
-	return HttpResponseRedirect('/basic')
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/game')
+	else:	
+		return HttpResponseRedirect('/basic')
 def signup(request):
 	args={}
 	args.update(csrf(request))
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/game')
 	if request.method=='POST':
 		email=request.POST.get('email','')
 		password=request.POST.get('password','')
@@ -41,8 +46,7 @@ def signup(request):
 				return render_to_response('sucess.html',args)
 				#return HttpResponse(form.fields['email'])
 			else:
-				return HttpResponse('chu')
-		
+				return HttpResponse('chu')	
 	
 	args['form']=SignUpForm()
 	return render_to_response('sign.html',args)
