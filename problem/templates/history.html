@@ -1,0 +1,15 @@
+{%extends 'base.html'%}
+{%block catta%}
+
+<a href="/logout" class="btn btn-success">Logout</a>
+<a href="/history" class="btn btn-success">Edit</a>
+
+         
+{%endblock%}
+{%block last%}
+<form class="navbar-form navbar-right" action='/history/' method='post'>{%csrf_token%}
+{{form}}
+<button type="submit" class="btn btn-success">Save</button>
+</form>
+{%endblock%}
+

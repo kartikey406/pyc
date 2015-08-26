@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+{%block catta%}
+<form class="navbar-form navbar-right" action='/auth_view/' method='post'>{%csrf_token%}
+	<div class="form-group">
+              <input type="text" name="username" value="" id="username" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" value="" id="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+{%endblock%}
+{%block last%}
+<form action="/basic/" method="post"> {%csrf_token%}
+
+        <div class="col-md-4">
+	<h2>JOIN NOW</h2>
+	<p>{{form.as_ul}}</p>
+	{{as_ul}}
+	<button type='submit' class="btn btn-primary btn-lg">SignUp &raquo;</button>
+	
+        </div>
+
+
+
+</form>
+{%endblock%}

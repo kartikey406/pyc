@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+
+
+{%block catta%}
+
+<a href="/logout" class="btn btn-success">Logout</a>
+<a href="/history" class="btn btn-success">EditDetail</a>
+
+         
+{%endblock%}
+{%block address%}
+<h1>Hello, {{full_name}}</h1>
+<p>you can edit detais</p>
+{%endblock%}
+{%block demo%}
+
+<form class="navbar-form navbar-right" action='/history/' method='post'>{%csrf_token%}
+ <input type="text" name="username" value="" id="username"/>
+ <button type="submit" class="btn btn-success">Search</button>
+</form>
+{%endblock%}
+{%block last%}
+{%if k.track%}
+<h1 align="center">TopTracks</h1> 
+{%for b in k.track%}
+<div class="col-md-4">
+	<h2><a href={{b.url}}>{{b.name}}</a></h2>
+	
+	
+	
+        </div>
+{%endfor%}
+{%endif%}
+
+
+{%endblock%}
+
+ 
